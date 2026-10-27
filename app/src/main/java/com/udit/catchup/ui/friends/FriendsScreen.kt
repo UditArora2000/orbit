@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -72,6 +74,7 @@ class FriendsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FriendsScreen(
     onOpenPerson: (Long) -> Unit,
@@ -98,7 +101,7 @@ fun FriendsScreen(
         )
         Spacer(Modifier.height(8.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             FilterChip(
                 selected = filter == "ALL",
                 onClick = { vm.filter.value = "ALL" },
@@ -113,6 +116,11 @@ fun FriendsScreen(
                 selected = filter == "HANGOUT",
                 onClick = { vm.filter.value = "HANGOUT" },
                 label = { Text("Can hang out") },
+            )
+            FilterChip(
+                selected = filter == "TIGHT",
+                onClick = { vm.filter.value = "TIGHT" },
+                label = { Text("Tight") },
             )
         }
         Spacer(Modifier.height(8.dp))

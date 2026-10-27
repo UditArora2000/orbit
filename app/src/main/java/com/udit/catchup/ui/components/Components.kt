@@ -192,7 +192,7 @@ fun SwitchRow(
 fun PersonEditor(
     person: Person,
     saveLabel: String,
-    onSave: (how: String, relationship: String, notes: String, canHangout: Boolean, canCall: Boolean) -> Unit,
+    onSave: (how: String, relationship: String, notes: String, canHangout: Boolean, canCall: Boolean, isTight: Boolean) -> Unit,
     secondaryActions: (@Composable RowScope.() -> Unit)? = null,
 ) {
     var how by remember(person.id) { mutableStateOf(person.howWeKnow) }
@@ -200,6 +200,7 @@ fun PersonEditor(
     var notes by remember(person.id) { mutableStateOf(person.notes) }
     var canHangout by remember(person.id) { mutableStateOf(person.canHangout) }
     var canCall by remember(person.id) { mutableStateOf(person.canCall) }
+    var isTight by remember(person.id) { mutableStateOf(person.isTight) }
 
     Card(shape = MaterialTheme.shapes.large) {
         Column(Modifier.padding(20.dp)) {
@@ -257,6 +258,11 @@ fun PersonEditor(
                 "They'll go into your call rotation",
                 canCall,
             ) { canCall = it }
+            SwitchRow(
+                "Are we tight?",
+                "Your inner circle",
+                isTight,
+            ) { isTight = it }
 
             Spacer(Modifier.height(4.dp))
             OutlinedTextField(
@@ -277,7 +283,7 @@ fun PersonEditor(
                 secondaryActions?.invoke(this)
                 Spacer(Modifier.weight(1f))
                 Button(onClick = {
-                    onSave(how.trim(), relationship, notes.trim(), canHangout, canCall)
+                    onSave(how.trim(), relationship, notes.trim(), canHangout, canCall, isTight)
                 }) {
                     Text(saveLabel)
                 }

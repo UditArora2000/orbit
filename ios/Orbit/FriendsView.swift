@@ -6,6 +6,7 @@ struct FriendsView: View {
         case all = "All"
         case call = "Can call"
         case hangout = "Can hang out"
+        case tight = "Tight"
         var id: String { rawValue }
     }
 
@@ -21,6 +22,7 @@ struct FriendsView: View {
                 case .all: return true
                 case .call: return person.canCall
                 case .hangout: return person.canHangout
+                case .tight: return person.isTight
                 }
             }
             .filter { person in

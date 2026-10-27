@@ -13,8 +13,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.udit.orbit
-        MARKETING_VERSION: "1.2.0"
-        CURRENT_PROJECT_VERSION: "4"
+        MARKETING_VERSION: "1.3.0"
+        CURRENT_PROJECT_VERSION: "5"
         TARGETED_DEVICE_FAMILY: "1"
         SWIFT_VERSION: "5.9"
         CODE_SIGN_STYLE: Automatic

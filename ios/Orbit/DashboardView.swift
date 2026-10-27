@@ -16,6 +16,7 @@ struct DashboardView: View {
     private var untriagedCount: Int { people.filter { $0.status == Person.statusUntriaged }.count }
     private var callable: [Person] { people.filter { $0.status == Person.statusTriaged && $0.canCall } }
     private var hangoutCount: Int { people.filter { $0.status == Person.statusTriaged && $0.canHangout }.count }
+    private var tightCount: Int { people.filter { $0.status == Person.statusTriaged && $0.isTight }.count }
     private var cycleDone: Int { callable.filter { $0.contactedThisCycle }.count }
     private var nextUp: Person? { Rotation.candidates(people).first }
 
@@ -40,6 +41,9 @@ struct DashboardView: View {
                     HStack(spacing: 12) {
                         StatTile(value: "\(callable.count)", label: "can call")
                         StatTile(value: "\(hangoutCount)", label: "hangout crew")
+                    }
+                    HStack(spacing: 12) {
+                        StatTile(value: "\(tightCount)", label: "tight")
                         StatTile(value: "\(logs.count)", label: "catch-ups logged")
                     }
 
@@ -119,7 +123,7 @@ struct DashboardView: View {
                     caption: "\(cycleDone) of \(callable.count) called this round"
                 )
                 if cycleDone >= callable.count {
-                    Text("Round \(cycleNumber) complete — you caught up with everyone 🎉")
+                    Text("Round \(cycleNumber) complete — you caught up with everyone.")
                     Button("Start round \(cycleNumber + 1)") {
                         for person in people { person.contactedThisCycle = false }
                         cycleNumber += 1

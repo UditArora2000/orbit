@@ -15,6 +15,7 @@ final class Person {
     var notes: String
     var canHangout: Bool
     var canCall: Bool
+    var isTight: Bool = false
     var status: String
     var skipCount: Int
     var lastContactedAt: Date?
@@ -41,6 +42,7 @@ final class Person {
         self.notes = ""
         self.canHangout = false
         self.canCall = false
+        self.isTight = false
         self.status = Person.statusUntriaged
         self.skipCount = 0
         self.lastContactedAt = nil

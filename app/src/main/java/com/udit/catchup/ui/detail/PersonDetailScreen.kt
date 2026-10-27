@@ -67,6 +67,7 @@ class PersonDetailViewModel(app: Application) : AndroidViewModel(app) {
         notes: String,
         canHangout: Boolean,
         canCall: Boolean,
+        isTight: Boolean,
     ) = viewModelScope.launch {
         dao.update(
             person.copy(
@@ -75,6 +76,7 @@ class PersonDetailViewModel(app: Application) : AndroidViewModel(app) {
                 notes = notes,
                 canHangout = canHangout,
                 canCall = canCall,
+                isTight = isTight,
                 status = Person.STATUS_TRIAGED,
                 updatedAt = System.currentTimeMillis(),
             )
@@ -130,8 +132,8 @@ fun PersonDetailScreen(
         PersonEditor(
             person = p,
             saveLabel = "Save",
-            onSave = { how, rel, notes, hang, call ->
-                vm.save(p, how, rel, notes, hang, call)
+            onSave = { how, rel, notes, hang, call, tight ->
+                vm.save(p, how, rel, notes, hang, call, tight)
                 onBack()
             },
             secondaryActions = {

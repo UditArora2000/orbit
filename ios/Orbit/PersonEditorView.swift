@@ -15,6 +15,7 @@ struct PersonEditorView: View {
     @State private var notes: String
     @State private var canHangout: Bool
     @State private var canCall: Bool
+    @State private var isTight: Bool
 
     init(person: Person, saveLabel: String, onSave: @escaping () -> Void = {}) {
         self.person = person
@@ -25,6 +26,7 @@ struct PersonEditorView: View {
         _notes = State(initialValue: person.notes)
         _canHangout = State(initialValue: person.canHangout)
         _canCall = State(initialValue: person.canCall)
+        _isTight = State(initialValue: person.isTight)
     }
 
     var body: some View {
@@ -65,6 +67,14 @@ struct PersonEditorView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            Toggle(isOn: $isTight) {
+                VStack(alignment: .leading) {
+                    Text("Are we tight?")
+                    Text("Your inner circle")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
 
             TextField("Notes (optional)", text: $notes, axis: .vertical)
                 .lineLimit(2...4)
@@ -85,6 +95,7 @@ struct PersonEditorView: View {
         person.notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
         person.canHangout = canHangout
         person.canCall = canCall
+        person.isTight = isTight
         person.status = Person.statusTriaged
         person.updatedAt = .now
         try? context.save()

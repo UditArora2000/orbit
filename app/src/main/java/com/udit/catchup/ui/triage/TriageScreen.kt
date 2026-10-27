@@ -55,6 +55,7 @@ class TriageViewModel(app: Application) : AndroidViewModel(app) {
         notes: String,
         canHangout: Boolean,
         canCall: Boolean,
+        isTight: Boolean,
     ) = viewModelScope.launch {
         dao.update(
             person.copy(
@@ -63,6 +64,7 @@ class TriageViewModel(app: Application) : AndroidViewModel(app) {
                 notes = notes,
                 canHangout = canHangout,
                 canCall = canCall,
+                isTight = isTight,
                 status = Person.STATUS_TRIAGED,
                 updatedAt = System.currentTimeMillis(),
             )
@@ -140,8 +142,8 @@ fun TriageScreen(
             PersonEditor(
                 person = person,
                 saveLabel = "Done — next",
-                onSave = { how, rel, notes, hang, call ->
-                    vm.save(person, how, rel, notes, hang, call)
+                onSave = { how, rel, notes, hang, call, tight ->
+                    vm.save(person, how, rel, notes, hang, call, tight)
                 },
                 secondaryActions = {
                     OutlinedButton(onClick = { vm.skip(person) }) { Text("Skip") }

@@ -78,6 +78,7 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
     val untriagedCount = dao.observeUntriagedCount().state(0)
     val callableCount = dao.observeCallableCount().state(0)
     val hangoutCount = dao.observeHangoutCount().state(0)
+    val tightCount = dao.observeTightCount().state(0)
     val cycleDoneCount = dao.observeCycleDoneCount().state(0)
     val totalCatchUps = dao.observeTotalCatchUps().state(0)
     val nextUp = dao.observeNextUp().state(null)
@@ -136,6 +137,7 @@ fun DashboardScreen(
     val untriaged by vm.untriagedCount.collectAsStateWithLifecycle()
     val callable by vm.callableCount.collectAsStateWithLifecycle()
     val hangout by vm.hangoutCount.collectAsStateWithLifecycle()
+    val tight by vm.tightCount.collectAsStateWithLifecycle()
     val cycleDone by vm.cycleDoneCount.collectAsStateWithLifecycle()
     val totalCatchUps by vm.totalCatchUps.collectAsStateWithLifecycle()
     val nextUp by vm.nextUp.collectAsStateWithLifecycle()
@@ -343,28 +345,39 @@ fun DashboardScreen(
 
         // Stat tiles
         item {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                StatTile(
-                    value = "$callable",
-                    label = "can call",
-                    container = MaterialTheme.colorScheme.primaryContainer,
-                    content = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.weight(1f),
-                )
-                StatTile(
-                    value = "$hangout",
-                    label = "hangout crew",
-                    container = MaterialTheme.colorScheme.secondaryContainer,
-                    content = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.weight(1f),
-                )
-                StatTile(
-                    value = "$totalCatchUps",
-                    label = "catch-ups",
-                    container = MaterialTheme.colorScheme.tertiaryContainer,
-                    content = MaterialTheme.colorScheme.onTertiaryContainer,
-                    modifier = Modifier.weight(1f),
-                )
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    StatTile(
+                        value = "$callable",
+                        label = "can call",
+                        container = MaterialTheme.colorScheme.primaryContainer,
+                        content = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.weight(1f),
+                    )
+                    StatTile(
+                        value = "$hangout",
+                        label = "hangout crew",
+                        container = MaterialTheme.colorScheme.secondaryContainer,
+                        content = MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    StatTile(
+                        value = "$tight",
+                        label = "tight",
+                        container = MaterialTheme.colorScheme.tertiaryContainer,
+                        content = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.weight(1f),
+                    )
+                    StatTile(
+                        value = "$totalCatchUps",
+                        label = "catch-ups",
+                        container = MaterialTheme.colorScheme.surfaceVariant,
+                        content = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
         }
 

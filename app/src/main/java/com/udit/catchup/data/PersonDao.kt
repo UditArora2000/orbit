@@ -78,6 +78,9 @@ interface PersonDao {
     @Query("SELECT COUNT(*) FROM people WHERE status = 'TRIAGED' AND canHangout = 1")
     fun observeHangoutCount(): Flow<Int>
 
+    @Query("SELECT COUNT(*) FROM people WHERE status = 'TRIAGED' AND isTight = 1")
+    fun observeTightCount(): Flow<Int>
+
     @Query(
         "SELECT COUNT(*) FROM people WHERE status = 'TRIAGED' AND canCall = 1 " +
             "AND contactedThisCycle = 1"
@@ -113,7 +116,8 @@ interface PersonDao {
 
     @Query(
         "SELECT * FROM people WHERE status = 'TRIAGED' " +
-            "AND (:filter = 'ALL' OR (:filter = 'CALL' AND canCall = 1) OR (:filter = 'HANGOUT' AND canHangout = 1)) " +
+            "AND (:filter = 'ALL' OR (:filter = 'CALL' AND canCall = 1) OR (:filter = 'HANGOUT' AND canHangout = 1) " +
+            "OR (:filter = 'TIGHT' AND isTight = 1)) " +
             "AND (:search = '' OR displayName LIKE '%' || :search || '%' " +
             "OR howWeKnow LIKE '%' || :search || '%' " +
             "OR instagramUsername LIKE '%' || :search || '%') " +

@@ -20,6 +20,7 @@ data class Person(
     val notes: String = "",
     val canHangout: Boolean = false,
     val canCall: Boolean = false,
+    val isTight: Boolean = false,
     val status: String = STATUS_UNTRIAGED,
     val skipCount: Int = 0,
     val lastContactedAt: Long? = null,
